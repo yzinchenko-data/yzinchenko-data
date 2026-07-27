@@ -1,41 +1,78 @@
-# Ярослав Зинченко — Junior Data Analyst
+<div align="center">
 
-Анализирую продуктовые и бизнес-данные с помощью SQL, Python и статистики. Строю аналитические витрины, проверяю качество данных, исследую метрики и формулирую рекомендации с явными ограничениями.
+![Ярослав Зинченко — Junior Data Analyst](assets/profile-banner.svg)
 
-**Ищу позицию Junior Data Analyst / Product Analyst.**
+[![Junior Data Analyst](https://img.shields.io/badge/Junior_Data_Analyst-1E88E5?style=for-the-badge)](#обо-мне)
+[![Product Analytics](https://img.shields.io/badge/Product_Analytics-00A67E?style=for-the-badge)](#избранные-проекты)
+[![Open to work](https://img.shields.io/badge/Open_to_work-2EA44F?style=for-the-badge)](#связаться-со-мной)
 
-## Навыки
+</div>
 
-- **SQL и базы данных:** PostgreSQL, ClickHouse, CTE, оконные функции, сложные JOIN, когортный анализ.
-- **Python:** pandas, NumPy, SciPy, Matplotlib, Jupyter.
-- **Статистика:** A/B-тесты, доверительные интервалы, bootstrap, проверка качества эксперимента.
-- **BI:** Yandex DataLens, Tableau, Apache Superset, подготовка аналитических витрин.
-- **Инструменты:** Apache Airflow, Docker, Git, GitHub, API, воспроизводимые notebooks.
+## 👋 Обо мне
 
-## Основные проекты
+Я **Junior Data Analyst / Product Analyst**. Анализирую продуктовые и бизнес-данные, строю аналитические витрины, проверяю качество данных и превращаю расчёты в понятные рекомендации.
 
-### [Olist E-commerce Analytics](https://github.com/sureasguuds9-prog/olist-ecommerce-analytics)
+- 🎓 Магистрант НИУ ВШЭ, перехожу в аналитику из востоковедения.
+- 🔎 Ищу закономерности в поведении пользователей, продажах и продуктовых метриках.
+- 🧪 Провожу A/B-тесты и отдельно проверяю качество эксперимента.
+- 🧱 Работаю с SQL-витринами, когортным анализом, retention и RFM.
+- 📊 Создаю дашборды и воспроизводимые аналитические notebooks.
+- 💼 Открыт к позиции **Junior Data Analyst / Product Analyst**.
 
-End-to-end анализ маркетплейса: PostgreSQL-витрина на уровне заказа, продажи, retention, RFM, доставка и отзывы. На **96 478 доставленных заказах** обнаружена низкая доля повторных клиентов — **3,00%** — и сильная наблюдательная связь опозданий с плохими отзывами: **53,99% против 9,19%**.
+## 🛠️ Технологии и инструменты
 
-`PostgreSQL` · `SQL` · `Python` · `pandas` · `SciPy` · `DataLens`
+### Анализ и статистика
 
-### [MENA Investment Climate Index](https://github.com/sureasguuds9-prog/MENA-INVESTMENT-INDEX)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
-Исследовательский прототип индекса для **19 стран MENA за 2000–2024 годы**: сбор данных из API, панель из **475 country-year наблюдений**, fixed effects, Monte Carlo и Dash. Слабый бэктест вынесен в главный вывод, поэтому проект показывает не только модель, но и честную проверку её применимости.
+### SQL и базы данных
 
-`Python` · `World Bank API` · `IMF API` · `Panel Data` · `Monte Carlo` · `Dash`
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC01?style=for-the-badge&logo=clickhouse&logoColor=111111)
+![SQL](https://img.shields.io/badge/SQL-025E8C?style=for-the-badge&logo=database&logoColor=white)
 
-### [Mobile Game Product Analytics](https://github.com/sureasguuds9-prog/mobile-game-product-analytics)
+`CTE` · `оконные функции` · `сложные JOIN` · `когортный анализ` · `аналитические витрины`
 
-Когортный retention и A/B-тест монетизации. ARPU тестовой группы вырос на **5,26%**, но статистически значимого эффекта нет, а конверсия в покупку снизилась на **6,64%**; решение — не раскатывать механику без повторного теста.
+### BI и визуализация
 
-`Python` · `pandas` · `SciPy` · `A/B testing` · `Retention` · `Pytest`
+![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=tableau&logoColor=white)
+![Apache Superset](https://img.shields.io/badge/Apache_Superset-20A6C9?style=for-the-badge&logo=apachesuperset&logoColor=white)
+![Yandex DataLens](https://img.shields.io/badge/Yandex_DataLens-FFCC00?style=for-the-badge&logo=yandexcloud&logoColor=111111)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
 
-## Обо мне
+### Инженерные инструменты
 
-Магистрант НИУ ВШЭ. Перехожу в аналитику данных из востоковедения и использую предметную экспертизу в исследованиях рынков, экономики и бизнеса.
+![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![API](https://img.shields.io/badge/REST_API-6BA539?style=for-the-badge&logo=fastapi&logoColor=white)
 
-## Контакт
+## 🤘 Что умею
 
-[Написать через GitHub](https://github.com/sureasguuds9-prog/sureasguuds9-prog/issues/new?title=%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%B2%D0%B0%D0%BA%D0%B0%D0%BD%D1%81%D0%B8%D0%B8)
+- Формировать витрины на корректной гранулярности и контролировать размножение строк после JOIN.
+- Рассчитывать ARPU, ARPPU, conversion, retention, churn, GMV, AOV и другие продуктовые метрики.
+- Проводить A/B-тесты, bootstrap, t-тесты и тесты для долей; интерпретировать не только `p-value`, но и размер эффекта.
+- Проверять дубликаты, пропуски, уникальность ключей, ссылочную целостность и ограничения данных.
+- Выполнять когортный анализ, RFM-сегментацию и исследование пользовательских воронок.
+- Готовить аналитический вывод в цепочке **задача → данные → метод → результат → рекомендация → ограничения**.
+
+## 📖 Избранные проекты
+
+| Проект | Что сделано и найдено | Стек |
+|---|---|---|
+| 🛒 **[Olist E-commerce Analytics](https://github.com/sureasguuds9-prog/olist-ecommerce-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, retention, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании — **53,99% против 9,19%** при доставке вовремя. | PostgreSQL, SQL, Python, pandas, SciPy, DataLens |
+| 🌍 **[MENA Investment Climate Index](https://github.com/sureasguuds9-prog/MENA-INVESTMENT-INDEX)** | Исследовательский индекс для **19 стран за 2000–2024 годы**: API, панель из **475 наблюдений**, fixed effects, Monte Carlo и Dash. Слабый бэктест честно зафиксирован как граница применимости модели. | Python, World Bank API, IMF API, panel data, Monte Carlo, Dash |
+| 🎮 **[Mobile Game Product Analytics](https://github.com/sureasguuds9-prog/mobile-game-product-analytics)** | Retention и A/B-тест монетизации. ARPU вырос на **5,26%** без значимого эффекта, а конверсия снизилась на **6,64%** — механику рекомендовано не раскатывать без повторного теста. | Python, pandas, SciPy, Pingouin, Pytest |
+
+## 📫 Связаться со мной
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/Написать_через_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sureasguuds9-prog/sureasguuds9-prog/issues/new?title=%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%B2%D0%B0%D0%BA%D0%B0%D0%BD%D1%81%D0%B8%D0%B8)
+
+</div>
