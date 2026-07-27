@@ -30,13 +30,15 @@
 ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
+`Python` · `pandas` · `NumPy` · `SciPy` · `A/B-тесты` · `bootstrap`
+
 ### SQL и базы данных
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC01?style=for-the-badge&logo=clickhouse&logoColor=111111)
 ![SQL](https://img.shields.io/badge/SQL-025E8C?style=for-the-badge&logo=database&logoColor=white)
 
-`CTE` · `оконные функции` · `сложные JOIN` · `когортный анализ` · `аналитические витрины`
+`PostgreSQL` · `ClickHouse` · `SQLite` · `CTE` · `оконные функции` · `соединение таблиц с контролем гранулярности`
 
 ### BI и визуализация
 
@@ -45,6 +47,8 @@
 ![Yandex DataLens](https://img.shields.io/badge/Yandex_DataLens-FFCC00?style=for-the-badge&logo=yandexcloud&logoColor=111111)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
 
+`DataLens` · `Tableau` · `Apache Superset` · `Excel` · `Matplotlib`
+
 ### Инженерные инструменты
 
 ![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)
@@ -52,6 +56,8 @@
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 ![API](https://img.shields.io/badge/REST_API-6BA539?style=for-the-badge&logo=fastapi&logoColor=white)
+
+`Git` · `Docker` · `Apache Airflow` · `Jupyter Notebook` · `REST API`
 
 ## 🤘 Что умею
 
