@@ -6,11 +6,11 @@
 
 ## Навыки
 
-- **SQL:** PostgreSQL, CTE, оконные функции, сложные JOIN, когортный анализ.
+- **SQL и базы данных:** PostgreSQL, ClickHouse, CTE, оконные функции, сложные JOIN, когортный анализ.
 - **Python:** pandas, NumPy, SciPy, Matplotlib, Jupyter.
 - **Статистика:** A/B-тесты, доверительные интервалы, bootstrap, проверка качества эксперимента.
-- **BI:** Yandex DataLens, подготовка аналитических витрин.
-- **Инструменты:** Git, GitHub, API, воспроизводимые notebooks.
+- **BI:** Yandex DataLens, Tableau, Apache Superset, подготовка аналитических витрин.
+- **Инструменты:** Apache Airflow, Docker, Git, GitHub, API, воспроизводимые notebooks.
 
 ## Основные проекты
 
