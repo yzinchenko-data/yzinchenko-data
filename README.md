@@ -5,6 +5,7 @@
 [![Junior Data Analyst](https://img.shields.io/badge/Junior_Data_Analyst-1E88E5?style=for-the-badge)](#обо-мне)
 [![Product Analytics](https://img.shields.io/badge/Product_Analytics-00A67E?style=for-the-badge)](#избранные-проекты)
 [![Open to work](https://img.shields.io/badge/Open_to_work-2EA44F?style=for-the-badge)](#связаться-со-мной)
+[![CV PDF](https://img.shields.io/badge/CV-PDF-B3261E?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](cv/Yaroslav_Zinchenko_CV.pdf)
 
 </div>
 
@@ -66,8 +67,8 @@
 | Проект | Что сделано и найдено | Стек |
 |---|---|---|
 | 🛒 **[Olist E-commerce Analytics](https://github.com/sureasguuds9-prog/olist-ecommerce-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, retention, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании — **53,99% против 9,19%** при доставке вовремя. | PostgreSQL, SQL, Python, pandas, SciPy, DataLens |
+| 📚 **[StudyFlow Growth Analytics](https://github.com/sureasguuds9-prog/studyflow-growth-analytics)** | Воспроизводимый SaaS/EdTech-кейс на синтетических данных: воронка, когорты, unit-экономика и A/B-тест. Smart onboarding повысил activation 7d на **16,89 п.п.**, а paid conversion 14d — на **7,37 п.п.** | Python, pandas, SQL, SQLite, статистика, A/B-тесты |
 | 🌍 **[MENA Investment Climate Index](https://github.com/sureasguuds9-prog/MENA-INVESTMENT-INDEX)** | Исследовательский индекс для **19 стран за 2000–2024 годы**: API, панель из **475 наблюдений**, fixed effects, Monte Carlo и Dash. Слабый бэктест честно зафиксирован как граница применимости модели. | Python, World Bank API, IMF API, panel data, Monte Carlo, Dash |
-| 🎮 **[Mobile Game Product Analytics](https://github.com/sureasguuds9-prog/mobile-game-product-analytics)** | Retention и A/B-тест монетизации. ARPU вырос на **5,26%** без значимого эффекта, а конверсия снизилась на **6,64%** — механику рекомендовано не раскатывать без повторного теста. | Python, pandas, SciPy, Pingouin, Pytest |
 
 ## 📫 Связаться со мной
 
@@ -75,6 +76,7 @@
 
 [![Telegram](https://img.shields.io/badge/Telegram-@ZYaroslavR-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ZYaroslavR)
 [![Email](https://img.shields.io/badge/Email-yrzinchenko@edu.hse.ru-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yrzinchenko@edu.hse.ru)
+[![CV PDF](https://img.shields.io/badge/Скачать_CV-PDF-B3261E?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](cv/Yaroslav_Zinchenko_CV.pdf)
 [![GitHub](https://img.shields.io/badge/GitHub-sureasguuds9--prog-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sureasguuds9-prog)
 
 </div>
