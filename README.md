@@ -73,6 +73,8 @@
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/badge/Написать_через_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sureasguuds9-prog/sureasguuds9-prog/issues/new?title=%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%B2%D0%B0%D0%BA%D0%B0%D0%BD%D1%81%D0%B8%D0%B8)
+[![Telegram](https://img.shields.io/badge/Telegram-@ZYaroslavR-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/ZYaroslavR)
+[![Email](https://img.shields.io/badge/Email-yrzinchenko@edu.hse.ru-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yrzinchenko@edu.hse.ru)
+[![GitHub](https://img.shields.io/badge/GitHub-sureasguuds9--prog-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sureasguuds9-prog)
 
 </div>
