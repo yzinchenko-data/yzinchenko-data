@@ -79,6 +79,18 @@
 | 🎮 **[Продуктовая аналитика мобильной игры](https://github.com/sureasguuds9-prog/mobile-game-product-analytics)** | Когортное удержание и A/B-тест предложения. Набор B не рекомендован к запуску: ARPU вырос, но незначимо, а конверсия снизилась статистически значимо. | Python, pandas, SciPy, A/B-тесты |
 | 🎓 **[ИИ в образовании](https://github.com/sureasguuds9-prog/ai-education-analyst)** | Разведочный анализ 50 тыс. наблюдений: умеренное использование ИИ связано с лучшим приростом GPA, а 20+ часов — с высоким риском выгорания. Причинные ограничения вынесены явно. | Python, pandas, SciPy, статистика |
 
+## 📊 Проекты визуализации
+
+### [Olist E-commerce Overview — Tableau](https://github.com/sureasguuds9-prog/olist-tableau-analytics)
+
+<a href="https://github.com/sureasguuds9-prog/olist-tableau-analytics">
+  <img src="https://raw.githubusercontent.com/sureasguuds9-prog/olist-tableau-analytics/main/images/olist_dashboard.png" alt="Olist E-commerce Overview — Tableau" width="100%">
+</a>
+
+Интерактивный дашборд для мониторинга продаж и качества исполнения заказов: **R$15,8 млн GMV**, **99 092 заказа**, динамика, Top-10 категорий, карта штатов, статусы и связь задержки доставки с оценкой клиента. Глобальные фильтры пересчитывают все KPI и визуализации.
+
+[Репозиторий и методология](https://github.com/sureasguuds9-prog/olist-tableau-analytics) · [Скачать Tableau workbook](https://github.com/sureasguuds9-prog/olist-tableau-analytics/raw/main/tableau/olist_ecommerce_dashboard.twbx)
+
 ## 📫 Связаться со мной
 
 <div align="center">
