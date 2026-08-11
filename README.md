@@ -68,6 +68,39 @@
 - Выполнять когортный анализ, RFM-сегментацию и исследование пользовательских воронок.
 - Готовить аналитический вывод в цепочке **задача → данные → метод → результат → рекомендация → ограничения**.
 
+## 🎓 Учебные проекты Karpov.Courses
+
+Три варианта финального проекта оформлены как воспроизводимые аналитические кейсы: с проверкой качества данных, расчётом продуктовых метрик, статистическими тестами, ограничениями и решением для бизнеса.
+
+### 1. [Продуктовая аналитика мобильной игры](https://github.com/sureasguuds9-prog/mobile-game-product-analytics)
+
+<a href="https://github.com/sureasguuds9-prog/mobile-game-product-analytics">
+  <img src="assets/karpov/project-1-mobile-game-analytics.png" alt="Продуктовая аналитика мобильной игры" width="100%">
+</a>
+
+Когортное удержание, A/B-тест акционных предложений и метрики события. Набор B не рекомендован: рост ARPU не подтверждён, а конверсия снизилась значимо.<br>
+[Репозиторий](https://github.com/sureasguuds9-prog/mobile-game-product-analytics) · [Ноутбук](https://github.com/sureasguuds9-prog/mobile-game-product-analytics/blob/main/notebooks/final_project_variant_1.ipynb) · [Отчёт](https://github.com/sureasguuds9-prog/mobile-game-product-analytics/blob/main/reports/final_report.md)
+
+### 2. [A/B-тест оплаты и сегментация клиентов](https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-2-payment-ab-segmentation)
+
+<a href="https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-2-payment-ab-segmentation">
+  <img src="assets/karpov/project-2-payment-ab-segmentation.png" alt="A/B-тест оплаты и сегментация клиентов" width="100%">
+</a>
+
+CR, ARPU, ARPPU, bootstrap и SQL-сегментация. Значимо вырос только ARPPU, поэтому запуск механики без проверки пика платежей около 1900 не рекомендован.<br>
+[Проект](https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-2-payment-ab-segmentation) · [Ноутбук](https://github.com/sureasguuds9-prog/karpov-courses-projects/blob/main/project-2-payment-ab-segmentation/notebooks/project_2_full.ipynb) · [SQL](https://github.com/sureasguuds9-prog/karpov-courses-projects/blob/main/project-2-payment-ab-segmentation/sql/customer_segmentation.sql)
+
+### 3. [A/B-тест цены премиум-подписки](https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-3-premium-price-ab-test)
+
+<a href="https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-3-premium-price-ab-test">
+  <img src="assets/karpov/project-3-premium-price-ab-test.png" alt="A/B-тест цены премиум-подписки" width="100%">
+</a>
+
+Проверка транзакций, A/A-контроль и A/B-тест новой цены. Конверсия снизилась, а рост ARPU статистически не подтверждён — новую цену не следует раскатывать.<br>
+[Проект](https://github.com/sureasguuds9-prog/karpov-courses-projects/tree/main/project-3-premium-price-ab-test) · [Ноутбук](https://github.com/sureasguuds9-prog/karpov-courses-projects/blob/main/project-3-premium-price-ab-test/notebooks/project_3_variant_3.ipynb) · [Пошаговый разбор](https://github.com/sureasguuds9-prog/karpov-courses-projects/blob/main/project-3-premium-price-ab-test/docs/project_3_step_by_step_explanation.md)
+
+➡️ **[Открыть все учебные проекты Karpov.Courses](https://github.com/sureasguuds9-prog/karpov-courses-projects)**
+
 ## 📖 Избранные проекты
 
 | Проект | Что сделано и найдено | Стек |
