@@ -9,6 +9,10 @@
 
 </div>
 
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/261478486?v=4" width="150" alt="Ярослав Зинченко">
+</p>
+
 ## 👋 Обо мне
 
 Я **младший аналитик данных / продуктовый аналитик**. Анализирую продуктовые и бизнес-данные, строю аналитические витрины, проверяю качество данных и превращаю расчёты в понятные рекомендации.
@@ -19,6 +23,12 @@
 - 🧱 Работаю с SQL-витринами, когортным анализом, удержанием и RFM.
 - 📊 Создаю дашборды и воспроизводимые аналитические ноутбуки.
 - 💼 Открыт к позиции **младшего аналитика данных / продуктового аналитика**.
+
+## 🎓 Обучение
+
+- **Karpov.Courses, «Аналитик данных»** — февраль–август 2026, завершён.
+- **Karpov.Courses, «Симулятор аналитика данных»** — июль–август 2026, завершён.
+- **Excel и Google Таблицы** — март–август 2026, в процессе.
 
 ## 🛠️ Технологии и инструменты
 
@@ -47,7 +57,7 @@
 ![Yandex DataLens](https://img.shields.io/badge/Yandex_DataLens-FFCC00?style=for-the-badge&logo=yandexcloud&logoColor=111111)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
 
-`DataLens` · `Tableau` · `Apache Superset` · `Excel` · `Matplotlib`
+`DataLens` · `Tableau` · `Apache Superset` · `Excel` · `Google Таблицы` · `Matplotlib`
 
 ### Инженерные инструменты
 
@@ -72,7 +82,7 @@
 
 | Проект | Что сделано и найдено | Стек |
 |---|---|---|
-| 🛒 **[Аналитика Olist](https://github.com/sureasguuds9-prog/olist-ecommerce-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, удержание, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании — **53,99% против 9,19%** при доставке вовремя. | PostgreSQL, SQL, Python, pandas, SciPy, DataLens |
+| 🛒 **[Аналитика и BI Olist](https://github.com/sureasguuds9-prog/olist-tableau-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, удержание, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании — **53,99% против 9,19%** при доставке вовремя. Построил **3 Tableau-дашборда** и **4 страницы DataLens**. [Аналитическая часть](https://github.com/sureasguuds9-prog/olist-ecommerce-analytics). | PostgreSQL, SQL, Python, pandas, Tableau, DataLens |
 | 📚 **[Аналитика роста StudyFlow](https://github.com/sureasguuds9-prog/studyflow-growth-analytics)** | Воспроизводимый SaaS/EdTech-кейс на синтетических данных: продуктовые этапы, когорты, юнит-экономика и A/B-тест. Умный онбординг повысил активацию на **16,89 п.п.**, а оплату — на **7,37 п.п.** | Python, pandas, SQL, SQLite, статистика, A/B-тесты |
 | 👗 **[Рост и удержание TheLook](https://github.com/sureasguuds9-prog/thelook-growth-analytics)** | Сквозной аудит 100 тыс. пользователей: чистая выручка **$8,07 млн**, повторные покупки **30,4%**, удержание M1 **5,1%**. A/B-симуляция показывает, почему статистический рост конверсии ещё не равен выгодному запуску. | Python, pandas, BigQuery SQL, статистика |
 | 🌍 **[Индекс инвестиционного климата MENA](https://github.com/sureasguuds9-prog/MENA-INVESTMENT-INDEX)** | Исследовательский индекс для **19 стран за 2000–2024 годы**: API, панель из **475 наблюдений**, фиксированные эффекты, Монте-Карло и Dash. Слабый бэктест честно зафиксирован как граница применимости модели. | Python, World Bank API, IMF API, панельные данные, Dash |
