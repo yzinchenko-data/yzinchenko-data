@@ -1,6 +1,6 @@
 <div align="center">
 
-![Ярослав Зинченко — младший аналитик данных](assets/profile-banner.svg)
+![Ярослав Зинченко - младший аналитик данных](assets/profile-banner.svg)
 
 [![Аналитик данных](https://img.shields.io/badge/%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D1%82%D0%B8%D0%BA_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-1E88E5?style=for-the-badge)](#обо-мне)
 [![Продуктовая аналитика](https://img.shields.io/badge/%D0%9F%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2%D0%B0%D1%8F_%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-00A67E?style=for-the-badge)](#избранные-проекты)
@@ -22,9 +22,9 @@
 
 ## 🎓 Обучение
 
-- **Karpov.Courses, «Аналитик данных»** — февраль–август 2026, завершён.
-- **Karpov.Courses, «Симулятор аналитика данных»** — июль–август 2026, завершён.
-- **Excel и Google Таблицы** — март–август 2026, обучение завершено.
+- **Karpov.Courses, «Аналитик данных»** - январь-август 2026, завершён.
+- **Karpov.Courses, «Симулятор аналитика данных»** - июль-август 2026, завершён.
+- **Excel и Google Таблицы** - март-август 2026, завершен.
 
 ## 🛠️ Технологии и инструменты
 
@@ -78,19 +78,19 @@
 
 | Проект | Что сделано и найдено | Стек |
 |---|---|---|
-| 🛒 **[Аналитика и BI Olist](https://github.com/yzinchenko-data/olist-tableau-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, удержание, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании — **53,99% против 9,19%** при доставке вовремя. Построил **3 Tableau-дашборда** и **4 страницы DataLens**. [Аналитическая часть](https://github.com/yzinchenko-data/olist-ecommerce-analytics). | PostgreSQL, SQL, Python, pandas, Tableau, DataLens |
-| 📚 **[Аналитика роста StudyFlow](https://github.com/yzinchenko-data/studyflow-growth-analytics)** | Воспроизводимый SaaS/EdTech-кейс на синтетических данных: продуктовые этапы, когорты, юнит-экономика и A/B-тест. Умный онбординг повысил активацию на **16,89 п.п.**, а оплату — на **7,37 п.п.** | Python, pandas, SQL, SQLite, статистика, A/B-тесты |
+| 🛒 **[Аналитика и BI Olist](https://github.com/yzinchenko-data/olist-tableau-analytics)** | PostgreSQL-витрина на уровне заказа, продажи, удержание, RFM, доставка и отзывы. На **96 478 заказах** доля повторных клиентов составила **3,00%**, а плохих отзывов при опоздании - **53,99% против 9,19%** при доставке вовремя. Построил **3 Tableau-дашборда** и **4 страницы DataLens**. [Аналитическая часть](https://github.com/yzinchenko-data/olist-ecommerce-analytics). | PostgreSQL, SQL, Python, pandas, Tableau, DataLens |
+| 📚 **[Аналитика роста StudyFlow](https://github.com/yzinchenko-data/studyflow-growth-analytics)** | Воспроизводимый SaaS/EdTech-кейс на синтетических данных: продуктовые этапы, когорты, юнит-экономика и A/B-тест. Умный онбординг повысил активацию на **16,89 п.п.**, а оплату - на **7,37 п.п.** | Python, pandas, SQL, SQLite, статистика, A/B-тесты |
 | 👗 **[Рост и удержание TheLook](https://github.com/yzinchenko-data/thelook-growth-analytics)** | Сквозной аудит 100 тыс. пользователей: чистая выручка **$8,07 млн**, повторные покупки **30,4%**, удержание M1 **5,1%**. A/B-симуляция показывает, почему статистический рост конверсии ещё не равен выгодному запуску. | Python, pandas, BigQuery SQL, статистика |
-| 🌍 **[Индекс инвестиционного климата MENA](https://github.com/yzinchenko-data/MENA-INVESTMENT-INDEX)** | Исследовательский индекс для **19 стран за 2000–2024 годы**: API, панель из **475 наблюдений**, фиксированные эффекты, Монте-Карло и Dash. Слабый бэктест честно зафиксирован как граница применимости модели. | Python, World Bank API, IMF API, панельные данные, Dash |
+| 🌍 **[Индекс инвестиционного климата MENA](https://github.com/yzinchenko-data/MENA-INVESTMENT-INDEX)** | Исследовательский индекс для **19 стран за 2000-2024 годы**: API, панель из **475 наблюдений**, фиксированные эффекты, Монте-Карло и Dash. Слабый бэктест честно зафиксирован как граница применимости модели. | Python, World Bank API, IMF API, панельные данные, Dash |
 | 🎮 **[Продуктовая аналитика мобильной игры](https://github.com/yzinchenko-data/mobile-game-product-analytics)** | Когортное удержание и A/B-тест предложения. Набор B не рекомендован к запуску: ARPU вырос, но незначимо, а конверсия снизилась статистически значимо. | Python, pandas, SciPy, A/B-тесты |
-| 🎓 **[ИИ в образовании](https://github.com/yzinchenko-data/ai-education-analyst)** | Разведочный анализ 50 тыс. наблюдений: умеренное использование ИИ связано с лучшим приростом GPA, а 20+ часов — с высоким риском выгорания. Причинные ограничения вынесены явно. | Python, pandas, SciPy, статистика |
+| 🎓 **[ИИ в образовании](https://github.com/yzinchenko-data/ai-education-analyst)** | Разведочный анализ 50 тыс. наблюдений: умеренное использование ИИ связано с лучшим приростом GPA, а 20+ часов - с высоким риском выгорания. Причинные ограничения вынесены явно. | Python, pandas, SciPy, статистика |
 
 ## 📊 Проекты визуализации
 
-### [Olist E-commerce Overview — Tableau](https://github.com/yzinchenko-data/olist-tableau-analytics)
+### [Olist E-commerce Overview - Tableau](https://github.com/yzinchenko-data/olist-tableau-analytics)
 
 <a href="https://github.com/yzinchenko-data/olist-tableau-analytics">
-  <img src="https://raw.githubusercontent.com/yzinchenko-data/olist-tableau-analytics/main/images/olist_dashboard.png" alt="Olist E-commerce Overview — Tableau" width="100%">
+  <img src="https://raw.githubusercontent.com/yzinchenko-data/olist-tableau-analytics/main/images/olist_dashboard.png" alt="Olist E-commerce Overview - Tableau" width="100%">
 </a>
 
 Интерактивный дашборд для мониторинга продаж и качества исполнения заказов: **R$15,8 млн GMV**, **99 092 заказа**, динамика, Top-10 категорий, карта штатов, статусы и связь задержки доставки с оценкой клиента. Глобальные фильтры пересчитывают все KPI и визуализации.
@@ -125,7 +125,7 @@ CR, ARPU, ARPPU, bootstrap и SQL-сегментация. Значимо выр�
   <img src="assets/karpov/project-3-premium-price-ab-test.png" alt="A/B-тест цены премиум-подписки" width="100%">
 </a>
 
-Проверка транзакций, A/A-контроль и A/B-тест новой цены. Конверсия снизилась, а рост ARPU статистически не подтверждён — новую цену не следует раскатывать.<br>
+Проверка транзакций, A/A-контроль и A/B-тест новой цены. Конверсия снизилась, а рост ARPU статистически не подтверждён - новую цену не следует раскатывать.<br>
 [Проект](https://github.com/yzinchenko-data/karpov-courses-projects/tree/main/project-3-premium-price-ab-test) · [Ноутбук](https://github.com/yzinchenko-data/karpov-courses-projects/blob/main/project-3-premium-price-ab-test/notebooks/project_3_variant_3.ipynb) · [Пошаговый разбор](https://github.com/yzinchenko-data/karpov-courses-projects/blob/main/project-3-premium-price-ab-test/docs/project_3_step_by_step_explanation.md)
 
 ➡️ **[Открыть все учебные проекты Karpov.Courses](https://github.com/yzinchenko-data/karpov-courses-projects)**
