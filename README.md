@@ -26,12 +26,13 @@
 | **Анализ и статистика** | Python, pandas, NumPy, SciPy, A/B-тесты, bootstrap |
 | **SQL и базы данных** | PostgreSQL, ClickHouse, SQLite, оконные функции, CTE |
 | **BI и визуализация** | Tableau, Apache Superset, Yandex DataLens, Excel, Google Таблицы |
-| **Инструменты** | Git, Docker, Apache Airflow, Jupyter, REST API |
+| **Инструменты** | Git, Docker, Apache Airflow, Jupyter, REST API, GitHub Actions |
 
 ## Избранные проекты
 
 | Проект | Что сделано и найдено | Стек |
 |---|---|---|
+| **[Yandex Metrica Analytics Pipeline](https://github.com/yzinchenko-data/yandex-metrica-analytics-pipeline)** | Сквозной ETL: API Яндекс.Метрики (OAuth, пагинация, retry) → валидация качества → трёхслойная модель PostgreSQL (`raw` → `staging` → `analytics`) → SQL-витрины по трафику, источникам, устройствам и географии → самодостаточный Python-дашборд с поиском аномалий. На демоданных за 599 дней: 2,40 млн пользователей, 3,08 млн визитов, mobile формирует ~58% аудитории с отказами на 15,8 п.п. выше desktop. 43 автотеста, ежедневный CI в GitHub Actions. | Python, PostgreSQL, SQLAlchemy, Docker, Pytest, GitHub Actions |
 | **[Аналитика и BI Olist](https://github.com/yzinchenko-data/olist-tableau-analytics)** | PostgreSQL-витрина на уровне заказа: продажи, удержание, RFM, доставка и отзывы. На 96 478 заказах доля повторных клиентов — 3,00%, доля плохих отзывов при опоздании — 53,99% против 9,19% при доставке вовремя. 3 дашборда Tableau и 4 страницы DataLens. [Аналитическая часть →](https://github.com/yzinchenko-data/olist-ecommerce-analytics) | PostgreSQL, SQL, Python, pandas, Tableau, DataLens |
 | **[Аналитика роста StudyFlow](https://github.com/yzinchenko-data/studyflow-growth-analytics)** | Воспроизводимый SaaS/EdTech-кейс: продуктовые этапы, когорты, юнит-экономика, A/B-тест. Умный онбординг повысил активацию на 16,89 п.п., оплату — на 7,37 п.п. | Python, pandas, SQL, SQLite, статистика |
 | **[Рост и удержание TheLook](https://github.com/yzinchenko-data/thelook-growth-analytics)** | Сквозной аудит 100 тыс. пользователей: чистая выручка $8,07 млн, повторные покупки 30,4%, удержание M1 5,1%. Показано, почему статистически значимый рост конверсии ещё не гарантирует выгодный запуск. | Python, pandas, BigQuery SQL, статистика |
@@ -40,6 +41,16 @@
 | **[ИИ в образовании](https://github.com/yzinchenko-data/ai-education-analyst)** | Разведочный анализ 50 тыс. наблюдений: умеренное использование ИИ связано с приростом GPA, 20+ часов — с риском выгорания. Причинные ограничения обозначены явно. | Python, pandas, SciPy, статистика |
 
 ## Визуализация
+
+**[Yandex Metrica Analytics Pipeline — Python-дашборд](https://github.com/yzinchenko-data/yandex-metrica-analytics-pipeline)**
+
+<a href="https://github.com/yzinchenko-data/yandex-metrica-analytics-pipeline">
+  <img src="https://raw.githubusercontent.com/yzinchenko-data/yandex-metrica-analytics-pipeline/main/dashboards/dashboard_full.png" alt="Yandex Metrica Analytics Pipeline — дашборд" width="100%">
+</a>
+
+Самодостаточный HTML-дашборд без CDN и внешних запросов: Executive Overview, Acquisition, Audience & Technology, Content — с поиском аномалий в дневном трафике и приоритизацией страниц для оптимизации.
+
+[Репозиторий и методология](https://github.com/yzinchenko-data/yandex-metrica-analytics-pipeline)
 
 **[Olist E-commerce Overview — Tableau](https://github.com/yzinchenko-data/olist-tableau-analytics)**
 
