@@ -1,0 +1,7 @@
+streamlit>=1.40
+pandas>=2.0
+numpy>=1.24
+duckdb>=1.0
+openpyxl>=3.1
+xlrd>=2.0       # только для старых .xls
+matplotlib>=3.7 # графики в pandas-редакторе (необязательно)
