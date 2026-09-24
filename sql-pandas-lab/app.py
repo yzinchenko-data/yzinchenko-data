@@ -393,8 +393,7 @@ def main() -> None:
         st.title("🧪 SQL & Pandas Lab")
         st.radio("Раздел", PAGES, key="page", label_visibility="collapsed")
         st.divider()
-        progress = core.load_progress()
-        st.caption(f"Таблиц: **{len(tables)}** · решено задач: **{len(progress)}**")
+        stats = st.empty()
         st.caption(f"Папка данных:\n`{core.DATA_DIR}`")
 
     page = st.session_state.get("page", PAGES[0])
@@ -408,6 +407,8 @@ def main() -> None:
         page_tasks(tables)
     else:
         page_jupyter(tables)
+    # Счётчики заполняем в конце, чтобы они учитывали загрузки и решения этого же запуска
+    stats.caption(f"Таблиц: **{len(core.load_catalog())}** · решено задач: **{len(core.load_progress())}**")
 
 
 main()
