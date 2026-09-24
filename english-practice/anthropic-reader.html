@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Frontier Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --surface-2:#E9EDF1;
+  --ink:#141920; --ink-2:#465061; --muted:#6F7887; --line:#D9DFE6;
+  --accent:#0B6E66; --accent-ink:#FFFFFF; --accent-soft:#D5ECE8;
+  --word:#8A5200; --word-bg:#FFF0D2; --saved:#B4366B;
+  --good:#1E7A3C; --good-bg:#DDF2E3; --bad:#B42318; --bad-bg:#FBE3E0;
+  --tok-a:rgba(11,110,102,.13); --tok-b:rgba(138,82,0,.13);
+  --shadow:0 12px 32px rgba(20,25,32,.14);
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --read-size:1.18rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1116; --surface:#151B22; --surface-2:#1C242D;
+    --ink:#E7EBF0; --ink-2:#B2BCC8; --muted:#8490A0; --line:#27303B;
+    --accent:#4FD1BF; --accent-ink:#06201D; --accent-soft:#12352F;
+    --word:#F3BA52; --word-bg:#3A2B10; --saved:#F27BA8;
+    --good:#6FD08C; --good-bg:#12301C; --bad:#FF8A7A; --bad-bg:#3A1612;
+    --tok-a:rgba(79,209,191,.16); --tok-b:rgba(243,186,82,.15);
+    --shadow:0 12px 32px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1116; --surface:#151B22; --surface-2:#1C242D;
+  --ink:#E7EBF0; --ink-2:#B2BCC8; --muted:#8490A0; --line:#27303B;
+  --accent:#4FD1BF; --accent-ink:#06201D; --accent-soft:#12352F;
+  --word:#F3BA52; --word-bg:#3A2B10; --saved:#F27BA8;
+  --good:#6FD08C; --good-bg:#12301C; --bad:#FF8A7A; --bad-bg:#3A1612;
+  --tok-a:rgba(79,209,191,.16); --tok-b:rgba(243,186,82,.15);
+  --shadow:0 12px 32px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:1.02rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:auto}
+.brand-mark{width:22px;height:22px;border-radius:6px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-family:var(--mono);font-size:.7rem;font-weight:600}
+.chip-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-family:var(--mono);font-size:.74rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.chip-btn:hover{border-color:var(--accent)}
+.chip-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.count{font-variant-numeric:tabular-nums;font-weight:600}
+.progress{height:3px;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+
+/* ---------- layout ---------- */
+.shell{max-width:1240px;margin:0 auto;padding-inline:16px;display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:1080px){.shell{grid-template-columns:220px minmax(0,1fr)}}
+.rail{display:none}
+@media (min-width:1080px){
+  .rail{display:block;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);align-self:start;padding-top:48px}
+}
+.rail h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:600}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:ch}
+.rail a{display:grid;grid-template-columns:28px 1fr;gap:4px;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--ink-2);font-family:var(--display);font-size:.9rem;line-height:1.3}
+.rail a span{font-family:var(--mono);font-size:.72rem;color:var(--muted);padding-top:2px}
+.rail a:hover{background:var(--surface-2);color:var(--ink)}
+.rail a.on{background:var(--accent-soft);color:var(--ink)}
+.rail a.on span{color:var(--accent)}
+.rail .extra{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+
+main{min-width:0;padding-block:0 96px}
+.col{max-width:700px}
+
+/* ---------- hero ---------- */
+.hero{padding-block:56px 28px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.level{border:1px solid currentColor;border-radius:4px;padding:1px 6px;letter-spacing:.06em}
+.tokens{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7.4vw,5.2rem);line-height:1.02;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.tokens .t{border-radius:10px;padding:0 .04em;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background .25s}
+.tokens .t:nth-child(odd){background:var(--tok-a)}
+.tokens .t:nth-child(even){background:var(--tok-b)}
+.tok-note{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin:12px 0 0}
+.dek{font-size:1.28rem;line-height:1.55;color:var(--ink-2);max-width:40rem;margin:26px 0 0}
+.how{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;max-width:760px}
+.how div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-family:var(--display);font-size:.92rem;line-height:1.4;color:var(--ink-2)}
+.how b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+.demo-w{color:var(--ink);border-bottom:2px dotted var(--word)}
+
+/* year ruler */
+.ruler-wrap{overflow-x:auto;margin-top:40px;padding-bottom:6px}
+.ruler{position:relative;min-width:720px;height:86px}
+.ruler .axis{position:absolute;left:0;right:0;top:42px;height:2px;background:var(--line)}
+.ruler .fill{position:absolute;left:0;top:42px;height:2px;background:var(--accent);width:0;transition:width .15s linear}
+.ruler a{position:absolute;top:36px;transform:translateX(-50%);text-decoration:none;color:var(--ink-2);display:flex;flex-direction:column;align-items:center}
+.ruler a i{width:14px;height:14px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.ruler a b{font-family:var(--mono);font-size:.72rem;font-weight:600;position:absolute;white-space:nowrap}
+.ruler a small{font-family:var(--display);font-size:.72rem;position:absolute;white-space:nowrap;color:var(--muted)}
+.ruler a.up b{bottom:22px}.ruler a.up small{bottom:36px}
+.ruler a.dn b{top:20px}.ruler a.dn small{top:34px}
+.ruler a:hover i{background:var(--accent)}
+.ruler a:hover small{color:var(--ink)}
+
+/* ---------- chapters ---------- */
+.chapter{padding-top:56px;scroll-margin-top:70px}
+.ch-meta{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;letter-spacing:.02em}
+.ch-meta .n{color:var(--accent);font-weight:600}
+.chapter h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,4.4vw,2.6rem);line-height:1.08;letter-spacing:-.025em;margin:0 0 22px;text-wrap:balance}
+.prose p{font-size:var(--read-size);line-height:1.72;margin:0 0 1.05em;max-width:66ch}
+.prose p.lead::first-letter{font-family:var(--display);font-weight:800;float:left;font-size:3.4em;line-height:.85;padding:.06em .08em 0 0;color:var(--accent)}
+.pull{font-family:var(--display);font-size:1.5rem;line-height:1.3;letter-spacing:-.01em;border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:28px 0;color:var(--ink);max-width:40rem}
+.pull cite{display:block;font-family:var(--mono);font-size:.74rem;font-style:normal;color:var(--muted);margin-top:8px}
+
+/* vocabulary words */
+.w{cursor:help;border-bottom:2px dotted var(--word);transition:background .15s;border-radius:2px}
+.w:hover,.w:focus-visible,.w.open{background:var(--word-bg)}
+.w.saved{border-bottom-style:solid;border-bottom-color:var(--saved)}
+body.challenge .w{border-bottom-color:transparent}
+body.challenge .w.saved{border-bottom-color:transparent}
+
+.tip{position:fixed;z-index:60;width:min(300px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px 12px;font-family:var(--display);opacity:0;transform:translateY(4px);pointer-events:none;transition:opacity .12s,transform .12s}
+.tip.show{opacity:1;transform:none;pointer-events:auto}
+.tip .hw{font-weight:800;font-size:1.12rem;letter-spacing:-.01em}
+.tip .ru{font-family:var(--serif);font-size:1.12rem;color:var(--accent);margin-top:2px;font-weight:600}
+.tip .def{font-size:.86rem;color:var(--ink-2);line-height:1.4;margin-top:6px}
+.tip .row{display:flex;gap:8px;margin-top:10px}
+.tip .row button{flex:1;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:6px 8px;font-family:var(--mono);font-size:.72rem;cursor:pointer}
+.tip .row button:hover{border-color:var(--accent)}
+.tip .row button.on{background:var(--saved);border-color:var(--saved);color:#fff}
+
+/* figures */
+figure.chart{margin:32px 0 36px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 20px 14px;max-width:760px}
+figure.chart .fig-k{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+figure.chart h3{font-family:var(--display);font-size:1.18rem;font-weight:600;letter-spacing:-.01em;margin:4px 0 2px;line-height:1.3}
+figure.chart .sub{font-family:var(--display);font-size:.86rem;color:var(--muted);margin:0 0 14px}
+.canvas-box{position:relative;height:300px;max-width:100%}
+figcaption{font-family:var(--display);font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.45}
+
+/* timeline */
+.tl{list-style:none;margin:28px 0 36px;padding:0;position:relative;max-width:720px}
+.tl::before{content:"";position:absolute;left:92px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{display:grid;grid-template-columns:80px 1fr;gap:26px;padding:10px 0;position:relative}
+.tl li::before{content:"";position:absolute;left:87px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl li.big::before{background:var(--accent)}
+.tl time{font-family:var(--mono);font-size:.76rem;color:var(--muted);padding-top:5px;text-align:right;font-variant-numeric:tabular-nums}
+.tl h5{font-family:var(--display);font-size:1.02rem;font-weight:600;margin:0;line-height:1.35}
+.tl p{font-family:var(--display);font-size:.9rem;color:var(--ink-2);margin:2px 0 0;line-height:1.45}
+.tag{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:4px;background:var(--accent-soft);color:var(--ink);margin-left:6px;vertical-align:2px}
+@media (max-width:520px){
+  .trio{grid-template-columns:1fr}
+  .brand-name{display:none}
+  .tl::before{left:64px}.tl li{grid-template-columns:54px 1fr;gap:24px}.tl li::before{left:59px}
+}
+
+/* callout: models naming */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0;max-width:720px}
+.trio div{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+.trio b{font-family:var(--display);font-size:1.1rem;display:block}
+.trio small{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+.trio p{font-family:var(--display);font-size:.88rem;color:var(--ink-2);margin:6px 0 0;line-height:1.4}
+
+/* ---------- vocab & quiz ---------- */
+.panel-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.seg button{border:0;background:none;border-radius:999px;padding:5px 12px;font-family:var(--mono);font-size:.74rem;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.card{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.card:hover{border-color:var(--accent)}
+.card .en{font-family:var(--display);font-weight:600;font-size:1rem;display:flex;justify-content:space-between;gap:8px}
+.card .en em{font-style:normal;color:var(--saved);font-size:.8rem}
+.card .d{font-family:var(--display);font-size:.8rem;color:var(--muted);line-height:1.35}
+.card .r{font-family:var(--serif);font-weight:600;color:var(--accent);filter:blur(5px);transition:filter .2s;margin-top:auto}
+.card.rev .r,.cards.reveal .r{filter:none}
+.empty{font-family:var(--display);color:var(--muted);padding:18px;border:1px dashed var(--line);border-radius:12px}
+
+.quiz{display:grid;gap:14px;max-width:720px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.q h5{font-family:var(--display);font-size:1.02rem;font-weight:600;margin:0 0 10px;line-height:1.4}
+.q h5 span{font-family:var(--mono);color:var(--muted);font-size:.74rem;margin-right:8px;font-weight:400}
+.opts{display:grid;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;cursor:pointer;font-family:var(--display);font-size:.92rem}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.ok{background:var(--good-bg);border-color:var(--good);color:var(--ink)}
+.opts button.no{background:var(--bad-bg);border-color:var(--bad);color:var(--ink)}
+.opts button.ok::after{content:"  ✓ correct";font-family:var(--mono);font-size:.72rem;color:var(--good)}
+.opts button.no::after{content:"  ✗";font-family:var(--mono);font-size:.72rem;color:var(--bad)}
+.why{font-family:var(--display);font-size:.86rem;color:var(--ink-2);margin:10px 0 0}
+.score{font-family:var(--display);font-size:1rem;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.score b{font-family:var(--mono);font-size:1.4rem;color:var(--accent);font-variant-numeric:tabular-nums}
+
+.foot{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--display);font-size:.82rem;color:var(--muted);max-width:720px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#top"><span class="brand-mark">Fr</span><span class="brand-name">The Frontier Reader</span></a>
+    <button class="chip-btn" id="sizeDown" type="button" aria-label="Smaller text">A−</button>
+    <button class="chip-btn" id="sizeUp" type="button" aria-label="Larger text">A+</button>
+    <button class="chip-btn" id="challenge" type="button" aria-pressed="false" title="Hide the underlines and test yourself">Challenge mode</button>
+    <a class="chip-btn" href="#vocab" style="text-decoration:none">★ Saved <span class="count" id="savedCount">0</span></a>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+</header>
+
+<div class="shell" id="top">
+  <nav class="rail" aria-label="Chapters">
+    <h4>Chapters</h4>
+    <ol id="toc">
+      <li><a href="#ch1"><span>01</span>Dreams of thinking machines</a></li>
+      <li><a href="#ch2"><span>02</span>The deep learning revolution</a></li>
+      <li><a href="#ch3"><span>03</span>A different kind of AI company</a></li>
+      <li><a href="#ch4"><span>04</span>Teaching a model values</a></li>
+      <li><a href="#ch5"><span>05</span>Meet Claude</a></li>
+      <li><a href="#ch6"><span>06</span>From chatbot to coworker</a></li>
+      <li><a href="#ch7"><span>07</span>The economics of the frontier</a></li>
+      <li><a href="#ch8"><span>08</span>The road ahead</a></li>
+    </ol>
+    <div class="extra">
+      <ol>
+        <li><a href="#vocab"><span>★</span>Word bank</a></li>
+        <li><a href="#quiz"><span>?</span>Check yourself</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow"><span>English reading practice</span><span class="level">B2 → C1</span><span>≈ 25 min</span></p>
+      <h1 class="tokens" aria-label="The Long Road to Claude"><span class="t">The</span><span class="t"> Long</span><span class="t"> Road</span><span class="t"> to</span><span class="t"> Claude</span></h1>
+      <p class="tok-note" aria-hidden="true">↳ 5 tokens. This is roughly how a language model sees a sentence.</p>
+      <p class="dek">A story in eight chapters: how artificial intelligence grew from a thought experiment into a global industry, and how a small company called Anthropic set out to make it safe.</p>
+      <div class="how">
+        <div><b>Hover or tap</b>An <span class="demo-w">underlined word</span> shows its Russian translation and an English definition.</div>
+        <div><b>Save and listen</b>Save a word to your word bank, or press Listen to hear how it sounds.</div>
+        <div><b>Test yourself</b>Turn on Challenge mode to hide the hints, then take the quiz at the end.</div>
+      </div>
+      <div class="ruler-wrap" aria-label="Timeline 1950 to 2026">
+        <div class="ruler" id="ruler"><div class="axis"></div><div class="fill" id="rulerFill"></div></div>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section class="chapter" id="ch1">
+      <div class="ch-meta"><span class="n">Chapter 01</span><span>1950 – 2011</span><span>3 min read</span></div>
+      <h2>Dreams of thinking machines</h2>
+      <div class="prose">
+        <p class="lead">In 1950, the British mathematician Alan Turing asked a <span class="w">deceptively</span> simple question: can machines think? Rather than getting lost in philosophy, he proposed a practical test. If a person chatting through a keyboard could not <span class="w">reliably</span> tell a machine from a human, the machine, he <span class="w" data-k="argue">argued</span>, deserved to be called intelligent.</p>
+        <p>Six years later, a small group of researchers gathered at Dartmouth College and <span class="w" data-k="coin">coined</span> the term “artificial intelligence”. They were <span class="w">remarkably</span> optimistic, predicting that a single summer of work could make significant progress. That optimism turned out to be <span class="w">premature</span>. Over the following decades, the field went through cycles of <span class="w">hype</span> and disappointment, including long periods of reduced <span class="w">funding</span> that became known as “AI winters”.</p>
+        <p>Progress, however, never fully stopped. In 1997, IBM’s Deep Blue <span class="w" data-k="defeat">defeated</span> the world chess champion Garry Kasparov. Yet Deep Blue relied on <span class="w">brute-force</span> search and <span class="w">hand-crafted</span> rules written by experts. It could not learn anything outside chess, and it certainly could not hold a conversation.</p>
+      </div>
+      <blockquote class="pull">“I propose to consider the question, ‘Can machines think?’”<cite>Alan Turing, Computing Machinery and Intelligence, 1950</cite></blockquote>
+    </section>
+
+    <!-- 2 -->
+    <section class="chapter" id="ch2">
+      <div class="ch-meta"><span class="n">Chapter 02</span><span>2012 – 2020</span><span>3 min read</span></div>
+      <h2>The deep learning revolution</h2>
+      <div class="prose">
+        <p class="lead">The real <span class="w">turning point</span> came in 2012. A neural network called AlexNet, trained on ordinary graphics cards, dramatically <span class="w" data-k="outperform">outperformed</span> every <span class="w">rival</span> in an image recognition contest. Researchers realised that neural networks, an old idea that had long been <span class="w" data-k="dismiss">dismissed</span>, could become <span class="w">astonishingly</span> capable if they were given enough data and computing power.</p>
+        <p>In 2016, DeepMind’s AlphaGo beat Lee Sedol, one of the strongest Go players in history, a <span class="w">feat</span> that experts had expected to take another decade. A year later, eight Google researchers published a paper with a modest title, “Attention Is All You Need”. It introduced the Transformer, an <span class="w">architecture</span> that processes words <span class="w">in parallel</span> and learns which parts of a text should pay attention to which others. Almost every modern language model, including Claude, is built on this design.</p>
+        <p>What followed is often called the scaling era. Researchers noticed that model performance improved <span class="w">predictably</span> as they increased three <span class="w">ingredients</span>: the size of the model, the amount of training data and the amount of <span class="w">compute</span>. These relationships, known as <span class="w">scaling laws</span>, turned AI progress into something closer to an engineering problem, and a very expensive one. The chart below shows how much computation went into some <span class="w">landmark</span> systems. Notice that each gridline is ten times larger than the one below it.</p>
+      </div>
+      <figure class="chart">
+        <div class="fig-k">Figure 1 · Log scale</div>
+        <h3>Training compute of landmark AI systems</h3>
+        <p class="sub">Total floating-point operations (FLOP) used to train each model</p>
+        <div class="canvas-box"><canvas id="cCompute" aria-label="Training compute chart, rising from about 10 to the 17 FLOP in 2012 to over 10 to the 25 FLOP in 2023"></canvas></div>
+        <figcaption>Approximate public estimates, largely from Epoch AI. Between 2012 and 2023 the compute used for frontier models grew by roughly one hundred million times.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 3 -->
+    <section class="chapter" id="ch3">
+      <div class="ch-meta"><span class="n">Chapter 03</span><span>2021</span><span>3 min read</span></div>
+      <h2>A different kind of AI company</h2>
+      <div class="prose">
+        <p class="lead">In 2021, a group of seven researchers left OpenAI to start a new company. Among them were the <span class="w">siblings</span> Dario Amodei, who had led research on large language models such as GPT-2 and GPT-3, and Daniela Amodei, who had <span class="w" data-k="oversee">overseen</span> safety and policy work. They named the company Anthropic, a word that means “relating to human beings”.</p>
+        <p>The founders shared a <span class="w">conviction</span> that was unusual at the time. They believed that AI systems would soon become <span class="w">extraordinarily</span> powerful, and that this power could bring enormous benefits but also serious risks. Instead of staying <span class="w">on the sidelines</span>, they decided to build <span class="w">frontier</span> models themselves, so that they could study them <span class="w">up close</span> and show that safety and capability do not have to be a <span class="w">trade-off</span>.</p>
+        <p>Anthropic was set up as a <span class="w">public benefit corporation</span>, a legal structure that <span class="w" data-k="oblige">obliges</span> the company to consider its impact on society, not only on <span class="w">shareholders</span>. It later created the Long-Term Benefit Trust, an independent body that <span class="w">gradually</span> gains the power to elect members of the company’s <span class="w">board</span>. The company’s <span class="w">headquarters</span> are in San Francisco.</p>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="chapter" id="ch4">
+      <div class="ch-meta"><span class="n">Chapter 04</span><span>2022 – 2025</span><span>4 min read</span></div>
+      <h2>Teaching a model values</h2>
+      <div class="prose">
+        <p class="lead">How do you teach a machine to be helpful without being <span class="w">harmful</span>? The standard method, <span class="w">reinforcement learning</span> from human <span class="w">feedback</span> (RLHF), relies on thousands of people rating the model’s answers. In December 2022, Anthropic published an alternative called Constitutional AI. The model is given a written set of principles, a “constitution”, and learns to <span class="w">critique</span> and <span class="w">revise</span> its own responses according to them. The principles <span class="w" data-k="draw on">drew on</span> sources as varied as the Universal Declaration of Human Rights.</p>
+        <p>In September 2023, the company introduced its Responsible Scaling Policy. Inspired by the biosafety levels used in laboratories that handle dangerous <span class="w">pathogens</span>, the policy defines AI Safety Levels, or ASL. The more capable a model becomes, the <span class="w" data-k="strict">stricter</span> the <span class="w">safeguards</span> it requires before it can be trained further or released. When Claude Opus 4 launched in May 2025, it was the first model <span class="w" data-k="deploy">deployed</span> with the stronger ASL-3 protections, as a <span class="w">precaution</span>.</p>
+        <p>Anthropic also invests heavily in <span class="w">interpretability</span>, the science of looking inside a neural network to understand how it reaches its conclusions. In 2024, its researchers identified millions of “features” inside Claude: patterns of activity that correspond to concepts. In a famous experiment they <span class="w" data-k="amplify">amplified</span> one of them and created “Golden Gate Claude”, a version of the model that was <span class="w">obsessed</span> with the San Francisco bridge and mentioned it in almost every answer.</p>
+      </div>
+      <blockquote class="pull">The more capable the model, the stronger the safeguards it needs.<cite>The idea behind the Responsible Scaling Policy</cite></blockquote>
+    </section>
+
+    <!-- 5 -->
+    <section class="chapter" id="ch5">
+      <div class="ch-meta"><span class="n">Chapter 05</span><span>2023 – 2026</span><span>4 min read</span></div>
+      <h2>Meet Claude</h2>
+      <div class="prose">
+        <p class="lead">The launch of ChatGPT in November 2022 turned AI into a mass-market product almost <span class="w">overnight</span>. Anthropic’s own assistant, Claude, became publicly available in March 2023. Its name is widely seen as <span class="w">a nod to</span> Claude Shannon, the father of information theory. Claude 2 followed in July and could read about 75,000 words at once, <span class="w">roughly</span> the length of a novel.</p>
+        <p>In March 2024, the Claude 3 family introduced a <span class="w">naming scheme</span> <span class="w">borrowed</span> from poetry. Each name describes a size, from the short Japanese poem to the great musical work:</p>
+      </div>
+      <div class="trio">
+        <div><small>Small · fast</small><b>Haiku</b><p>A three-line poem. The quickest and cheapest model.</p></div>
+        <div><small>Balanced</small><b>Sonnet</b><p>A fourteen-line poem. The everyday workhorse.</p></div>
+        <div><small>Largest</small><b>Opus</b><p>A major work. The most <span class="w">capable</span> model.</p></div>
+      </div>
+      <div class="prose">
+        <p>Each generation also brought a larger <span class="w">context window</span>, the amount of text a model can consider at one time. It is measured in <span class="w" data-k="token">tokens</span>, small pieces of text that are usually shorter than a word. In the English language, 1,000 tokens are roughly 750 words.</p>
+      </div>
+      <figure class="chart">
+        <div class="fig-k">Figure 2</div>
+        <h3>How much Claude can read at once</h3>
+        <p class="sub">Maximum context window, in thousands of tokens</p>
+        <div class="canvas-box" style="height:280px"><canvas id="cContext" aria-label="Context window chart: 9 thousand tokens in March 2023, 100 thousand in 2023, 200 thousand from late 2023, one million in 2025"></canvas></div>
+        <figcaption>The 1,000K (one million) window for Claude Sonnet 4 launched in beta in August 2025. One million tokens is about 750,000 words, more than the whole Harry Potter series.</figcaption>
+      </figure>
+      <div class="prose"><p>Here are the most important releases, one after another:</p></div>
+      <ol class="tl" id="timeline"></ol>
+    </section>
+
+    <!-- 6 -->
+    <section class="chapter" id="ch6">
+      <div class="ch-meta"><span class="n">Chapter 06</span><span>2024 – 2025</span><span>3 min read</span></div>
+      <h2>From chatbot to coworker</h2>
+      <div class="prose">
+        <p class="lead">By 2024, the question was no longer whether a model could answer questions, but whether it could <span class="w">get things done</span>. In October 2024, Anthropic introduced “computer use”: Claude could look at a screen, move the <span class="w">cursor</span>, click buttons and type, much as a person would. A month later came the Model Context Protocol (MCP), an open standard that lets AI assistants connect to tools and data sources in a <span class="w">uniform</span> way. It was quickly <span class="w" data-k="adopt">adopted</span> across the industry, including by <span class="w">competitors</span>.</p>
+        <p>In February 2025, the company released Claude Code, a tool that lets developers <span class="w">delegate</span> programming tasks to Claude directly from the terminal. Instead of suggesting a line here and there, the model can read an entire <span class="w">codebase</span>, run tests and fix its own mistakes. Programming soon became one of Claude’s most important <span class="w">use cases</span>.</p>
+        <p>A <span class="w">benchmark</span> called SWE-bench Verified became a popular way to <span class="w">track</span> this progress. It checks whether a model can <span class="w">resolve</span> real problems taken from open-source projects on GitHub. In about a year, Claude’s score rose from under half to more than eighty percent.</p>
+      </div>
+      <figure class="chart">
+        <div class="fig-k">Figure 3</div>
+        <h3>Claude on SWE-bench Verified</h3>
+        <p class="sub">Share of real GitHub issues solved, % (higher is better)</p>
+        <div class="canvas-box"><canvas id="cSwe" aria-label="SWE-bench chart rising from 49 percent in October 2024 to 80.9 percent in November 2025"></canvas></div>
+        <figcaption>Scores as published by Anthropic at each model’s launch, standard setting without extra test-time compute.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 7 -->
+    <section class="chapter" id="ch7">
+      <div class="ch-meta"><span class="n">Chapter 07</span><span>2023 – 2025</span><span>3 min read</span></div>
+      <h2>The economics of the frontier</h2>
+      <div class="prose">
+        <p class="lead">Building frontier models requires <span class="w">staggering</span> amounts of money. Training runs <span class="w">consume</span> the power of <span class="w">vast</span> data centres full of specialised chips, and the cost of each generation has grown <span class="w">steadily</span>. To pay for this, Anthropic formed partnerships with cloud giants. Amazon <span class="w">committed</span> a total of $8 billion and became the company’s primary training partner, while Google also invested billions of dollars and supplies its TPU chips.</p>
+        <p>Investors have been <span class="w" data-k="bet">betting</span> heavily on the company’s growth. Its <span class="w">valuation</span> climbed from about $4 billion in 2023 to $183 billion in September 2025. <span class="w">Revenue</span> grew just as fast: the company’s <span class="w">annualised</span> revenue rose from roughly $1 billion at the start of 2025 to more than $5 billion by August, <span class="w">driven by</span> businesses and developers using Claude through the API.</p>
+      </div>
+      <figure class="chart">
+        <div class="fig-k">Figure 4</div>
+        <h3>What investors think Anthropic is worth</h3>
+        <p class="sub">Post-money valuation at each funding round, $ billions</p>
+        <div class="canvas-box"><canvas id="cValue" aria-label="Valuation chart: 4.1 billion dollars in 2023, 18.4 billion in early 2024, 61.5 billion in March 2025, 183 billion in September 2025"></canvas></div>
+        <figcaption>Figures as reported in the press and by the company. From 2023 to late 2025 the valuation grew about 45 times.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 8 -->
+    <section class="chapter" id="ch8">
+      <div class="ch-meta"><span class="n">Chapter 08</span><span>Today</span><span>2 min read</span></div>
+      <h2>The road ahead</h2>
+      <div class="prose">
+        <p class="lead">In October 2024, Dario Amodei published a long essay titled “Machines of Loving Grace”. In it he argued that powerful AI could <span class="w">compress</span> decades of scientific progress into a few years, helping to <span class="w">cure</span> diseases, lift billions of people out of poverty and strengthen democracy. He was equally <span class="w">candid</span> about the risks: <span class="w">misuse</span>, loss of control and the <span class="w">concentration of power</span>.</p>
+        <p>This <span class="w">tension</span> between promise and <span class="w">peril</span> defines the company. Critics point out that a lab worried about the dangers of AI is also <span class="w" data-k="race">racing</span> to build it. Anthropic’s answer is that someone will build these systems anyway, and it is better if safety-focused developers are at the frontier. Whether that bet <span class="w" data-k="pay off">pays off</span> is one of the most <span class="w">consequential</span> questions of our time.</p>
+        <p>Either way, the story is still being written. And now you can read it in English.</p>
+      </div>
+    </section>
+
+    <!-- vocab -->
+    <section class="chapter" id="vocab">
+      <div class="ch-meta"><span class="n">Word bank</span><span id="vocabMeta"></span></div>
+      <h2>Your words</h2>
+      <div class="panel-h">
+        <div class="seg" role="group" aria-label="Filter words">
+          <button type="button" id="fAll" aria-pressed="true">All words</button>
+          <button type="button" id="fSaved" aria-pressed="false">Saved</button>
+        </div>
+        <button class="chip-btn" id="revealAll" type="button" aria-pressed="false">Show all translations</button>
+      </div>
+      <p class="prose" style="margin:0 0 16px;font-family:var(--display);color:var(--ink-2);font-size:.95rem">Translations are blurred. Try to remember the meaning, then click a card to check.</p>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <!-- quiz -->
+    <section class="chapter" id="quiz">
+      <div class="ch-meta"><span class="n">Check yourself</span><span>10 questions</span></div>
+      <h2>How much do you remember?</h2>
+      <div class="score" style="margin-bottom:18px">Score <b id="score">0 / 10</b><button class="chip-btn" type="button" id="resetQuiz">Start again</button></div>
+      <div class="quiz" id="quizBox"></div>
+      <p class="foot">Facts and figures reflect public reports up to the end of 2025; the Claude 5 entry reflects the model names in use in 2026. Chart values are approximate and are meant for reading practice, not investment or research decisions. Your saved words stay only in this browser.</p>
+    </section>
+  </main>
+</div>
+
+<div class="tip" id="tip" role="dialog" aria-live="polite">
+  <div class="hw" id="tipW"></div>
+  <div class="ru" id="tipR"></div>
+  <div class="def" id="tipD"></div>
+  <div class="row"><button type="button" id="tipSay">🔊 Listen</button><button type="button" id="tipSave">☆ Save</button></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+/* ---------------- glossary: key -> [Russian, English definition] ---------------- */
+var G = {
+ "deceptively":["обманчиво","in a way that makes something seem simpler than it really is"],
+ "reliably":["надёжно, уверенно","consistently, in a way you can trust"],
+ "argue":["утверждать, доказывать","to give reasons why you believe something is true"],
+ "coin":["придумать (слово, термин)","to invent a new word or phrase"],
+ "remarkably":["удивительно, поразительно","to an unusual or surprising degree"],
+ "premature":["преждевременный","happening too early, before the right time"],
+ "hype":["ажиотаж, шумиха","exaggerated excitement and publicity"],
+ "funding":["финансирование","money given for a particular purpose"],
+ "defeat":["победить, одержать верх","to win against someone in a game or fight"],
+ "brute-force":["метод «грубой силы», полный перебор","solving a problem by trying every possibility"],
+ "hand-crafted":["созданный вручную","made carefully by people, not learned automatically"],
+ "turning point":["поворотный момент","the moment when an important change starts"],
+ "outperform":["превзойти","to do better than someone or something"],
+ "rival":["соперник, конкурент","someone competing for the same goal"],
+ "dismiss":["отвергать, не принимать всерьёз","to decide something is not worth considering"],
+ "astonishingly":["поразительно","extremely surprisingly"],
+ "feat":["подвиг, выдающееся достижение","an impressive achievement that needs skill or strength"],
+ "architecture":["архитектура (устройство системы)","the overall design and structure of a system"],
+ "in parallel":["параллельно, одновременно","at the same time, not one after another"],
+ "predictably":["предсказуемо","in a way that can be expected in advance"],
+ "ingredients":["составляющие, ингредиенты","the parts that together create something"],
+ "compute":["вычислительные мощности","the computing power used to train or run a model"],
+ "scaling laws":["законы масштабирования","rules that describe how performance grows with size, data and compute"],
+ "landmark":["знаковый, поворотный","very important in the history of something"],
+ "siblings":["брат и сестра; братья и сёстры","brothers and sisters"],
+ "oversee":["руководить, курировать","to be in charge of work and check that it is done well"],
+ "conviction":["убеждение, твёрдая уверенность","a strong belief"],
+ "extraordinarily":["чрезвычайно, необычайно","much more than usual"],
+ "on the sidelines":["в стороне","not taking part in an activity, only watching"],
+ "frontier":["передовой рубеж, передний край","the most advanced level of knowledge or technology"],
+ "up close":["вблизи, с близкого расстояния","from a very short distance"],
+ "trade-off":["компромисс, размен","a situation where getting more of one thing means getting less of another"],
+ "public benefit corporation":["общественно полезная корпорация","a company legally required to consider its impact on society"],
+ "oblige":["обязывать","to force someone by law or duty to do something"],
+ "shareholders":["акционеры","people who own shares in a company"],
+ "gradually":["постепенно","slowly, over a period of time"],
+ "board":["совет директоров","the group of people who control a company"],
+ "headquarters":["штаб-квартира, главный офис","the main office of an organisation"],
+ "harmful":["вредный, опасный","causing damage or injury"],
+ "reinforcement learning":["обучение с подкреплением","training by rewarding good behaviour and discouraging bad behaviour"],
+ "feedback":["обратная связь","opinions about how good or bad something is"],
+ "critique":["критически оценивать","to judge the good and bad points of something"],
+ "revise":["исправлять, пересматривать","to change something to improve it"],
+ "draw on":["опираться на, черпать из","to use something as a source"],
+ "pathogens":["патогены, возбудители болезней","bacteria or viruses that cause disease"],
+ "strict":["строгий","demanding that rules are followed exactly"],
+ "safeguards":["меры защиты","things that protect against harm or danger"],
+ "deploy":["развернуть, ввести в работу","to put a system into real use"],
+ "precaution":["мера предосторожности","an action taken in advance to prevent problems"],
+ "interpretability":["интерпретируемость","the ability to understand how a model makes its decisions"],
+ "amplify":["усилить","to make something stronger or louder"],
+ "obsessed":["одержимый","thinking about one thing all the time"],
+ "overnight":["в одночасье, мгновенно","very suddenly or quickly"],
+ "a nod to":["отсылка к, дань уважения","a small reference that shows respect or recognition"],
+ "roughly":["примерно, приблизительно","approximately, not exactly"],
+ "naming scheme":["система наименований","a planned system for giving names"],
+ "borrowed":["заимствованный","taken from another source or language"],
+ "capable":["способный, мощный","able to do things well"],
+ "context window":["контекстное окно","the amount of text a model can read and use at one time"],
+ "token":["токен","a small piece of text that a model processes, often part of a word"],
+ "get things done":["доводить дела до конца","to complete tasks effectively"],
+ "cursor":["курсор","the small arrow or line on a screen that shows position"],
+ "uniform":["единообразный, одинаковый","the same in all cases"],
+ "adopt":["принять, внедрить","to start using a method or idea"],
+ "competitors":["конкуренты","companies trying to win the same customers"],
+ "delegate":["поручать, делегировать","to give a task to someone else"],
+ "codebase":["кодовая база","all the source code of a software project"],
+ "use cases":["сценарии использования","specific situations in which a product is used"],
+ "benchmark":["эталонный тест, бенчмарк","a standard test used to compare performance"],
+ "track":["отслеживать","to follow the progress of something"],
+ "resolve":["решить, устранить","to find a solution to a problem"],
+ "staggering":["ошеломляющий, колоссальный","so large that it is shocking"],
+ "consume":["потреблять","to use up energy, time or resources"],
+ "vast":["огромный, обширный","extremely large"],
+ "steadily":["неуклонно, стабильно","gradually and continuously"],
+ "committed":["обязался (выделить)","promised to give money or resources"],
+ "bet":["делать ставку","to risk money on the result of something"],
+ "valuation":["оценка стоимости (компании)","how much a company is judged to be worth"],
+ "revenue":["выручка, доход","the money a company earns from sales"],
+ "annualised":["в годовом выражении","calculated as if for a full year"],
+ "driven by":["обусловленный, благодаря","caused mainly by"],
+ "compress":["сжать, уплотнить","to make something fit into a smaller space or time"],
+ "cure":["вылечить","to make a sick person or disease better"],
+ "candid":["откровенный, прямой","honest and direct"],
+ "misuse":["злоупотребление, неправильное использование","using something in a wrong or harmful way"],
+ "concentration of power":["концентрация власти","power held by very few people or organisations"],
+ "tension":["противоречие, напряжение","a conflict between two different ideas or forces"],
+ "peril":["серьёзная опасность","great danger"],
+ "race":["мчаться, гнаться","to compete to be the first or fastest"],
+ "pay off":["окупиться, оправдать себя","to be successful after effort or risk"],
+ "consequential":["значимый, влекущий последствия","having important results"]
+};
+
+/* ---------------- storage (safe) ---------------- */
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var saved = load("fr-saved", []);
+var prefs = load("fr-prefs", {size:1.18, challenge:false});
+
+/* ---------------- words ---------------- */
+var words = Array.prototype.slice.call(document.querySelectorAll(".w"));
+words.forEach(function(el){
+  var k = el.getAttribute("data-k") || el.textContent.trim().toLowerCase();
+  el.dataset.k = k;
+  el.tabIndex = 0;
+  el.setAttribute("role","button");
+  if(!G[k]) console.warn("Missing glossary entry:", k);
+});
+function paintSaved(){
+  words.forEach(function(el){el.classList.toggle("saved", saved.indexOf(el.dataset.k)>-1)});
+  document.getElementById("savedCount").textContent = saved.length;
+}
+
+/* tooltip */
+var tip=document.getElementById("tip"), tW=document.getElementById("tipW"), tR=document.getElementById("tipR"),
+    tD=document.getElementById("tipD"), tSave=document.getElementById("tipSave"), tSay=document.getElementById("tipSay");
+var cur=null, hideT=null;
+function showTip(el){
+  clearTimeout(hideT);
+  if(cur && cur!==el) cur.classList.remove("open");
+  cur=el; el.classList.add("open");
+  var k=el.dataset.k, g=G[k]||["—",""];
+  tW.textContent=k; tR.textContent=g[0]; tD.textContent=g[1];
+  setSaveBtn();
+  tip.classList.add("show");
+  var r=el.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight;
+  var x=Math.min(Math.max(16, r.left + r.width/2 - tw/2), window.innerWidth - tw - 16);
+  var y=r.bottom + 10;
+  if(y + th > window.innerHeight - 12) y = r.top - th - 10;
+  tip.style.left=x+"px"; tip.style.top=Math.max(8,y)+"px";
+}
+function hideTip(now){
+  clearTimeout(hideT);
+  hideT=setTimeout(function(){tip.classList.remove("show"); if(cur){cur.classList.remove("open"); cur=null}}, now?0:160);
+}
+function setSaveBtn(){
+  var on = cur && saved.indexOf(cur.dataset.k)>-1;
+  tSave.textContent = on ? "★ Saved" : "☆ Save";
+  tSave.classList.toggle("on", !!on);
+}
+function toggleSave(k){
+  var i=saved.indexOf(k);
+  if(i>-1) saved.splice(i,1); else saved.push(k);
+  save("fr-saved", saved); paintSaved(); setSaveBtn(); renderCards();
+}
+function speak(text){
+  try{
+    if(!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text); u.lang="en-US"; u.rate=.9;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+var hoverable = window.matchMedia("(hover: hover)").matches;
+words.forEach(function(el){
+  if(hoverable){
+    el.addEventListener("mouseenter",function(){showTip(el)});
+    el.addEventListener("mouseleave",function(){hideTip()});
+  }
+  el.addEventListener("focus",function(){showTip(el)});
+  el.addEventListener("click",function(e){e.stopPropagation(); if(cur===el && tip.classList.contains("show") && !hoverable) hideTip(true); else showTip(el)});
+  el.addEventListener("keydown",function(e){if(e.key==="Escape")hideTip(true); if(e.key==="s"||e.key==="S")toggleSave(el.dataset.k)});
+});
+tip.addEventListener("mouseenter",function(){clearTimeout(hideT)});
+tip.addEventListener("mouseleave",function(){hideTip()});
+tip.addEventListener("click",function(e){e.stopPropagation()});
+tSave.addEventListener("click",function(){ if(cur) toggleSave(cur.dataset.k) });
+tSay.addEventListener("click",function(){ if(cur) speak(cur.textContent) });
+document.addEventListener("click",function(){ if(tip.classList.contains("show")) hideTip(true) });
+window.addEventListener("scroll",function(){ if(!hoverable && tip.classList.contains("show")) hideTip(true) },{passive:true});
+
+/* ---------------- settings ---------------- */
+var chBtn=document.getElementById("challenge");
+function applyPrefs(){
+  document.documentElement.style.setProperty("--read-size", prefs.size+"rem");
+  document.body.classList.toggle("challenge", !!prefs.challenge);
+  chBtn.setAttribute("aria-pressed", prefs.challenge ? "true":"false");
+  save("fr-prefs", prefs);
+}
+document.getElementById("sizeUp").addEventListener("click",function(){prefs.size=Math.min(1.5,+(prefs.size+.06).toFixed(2));applyPrefs()});
+document.getElementById("sizeDown").addEventListener("click",function(){prefs.size=Math.max(1,+(prefs.size-.06).toFixed(2));applyPrefs()});
+chBtn.addEventListener("click",function(){prefs.challenge=!prefs.challenge;applyPrefs()});
+
+/* ---------------- year ruler ---------------- */
+var marks=[[1950,"Turing test","ch1"],[1956,"“AI” is coined","ch1"],[1997,"Deep Blue","ch1"],[2012,"AlexNet","ch2"],[2017,"Transformer","ch2"],[2021,"Anthropic","ch3"],[2023,"Claude","ch5"],[2026,"Today","ch8"]];
+var ruler=document.getElementById("ruler"), y0=1941, y1=2033;
+marks.forEach(function(m,i){
+  var a=document.createElement("a"); a.href="#"+m[2]; a.className=i%2?"dn":"up";
+  a.style.left=((m[0]-y0)/(y1-y0)*100)+"%";
+  a.innerHTML="<i></i><b>"+m[0]+"</b><small>"+m[1]+"</small>";
+  ruler.appendChild(a);
+});
+
+/* ---------------- timeline ---------------- */
+var TL=[
+ ["Mar 2023","Claude","The first public version, available to businesses and through a chat app.",1],
+ ["Jul 2023","Claude 2","Opens claude.ai to the public; reads 100K tokens, about a novel."],
+ ["Nov 2023","Claude 2.1","Context window doubles to 200K tokens."],
+ ["Mar 2024","Claude 3: Haiku, Sonnet, Opus","First model family; Claude learns to read images.",1],
+ ["Jun 2024","Claude 3.5 Sonnet","Faster and smarter than Claude 3 Opus. Introduces Artifacts."],
+ ["Oct 2024","Computer use","Upgraded 3.5 Sonnet can operate a computer screen.",0,"Agents"],
+ ["Nov 2024","Model Context Protocol","An open standard for connecting AI to tools and data.",0,"Open standard"],
+ ["Feb 2025","Claude 3.7 Sonnet + Claude Code","First hybrid reasoning model that can “think” before answering; Claude Code preview.",1],
+ ["May 2025","Claude 4: Opus 4, Sonnet 4","Opus 4 is the first model released under ASL-3 safeguards.",1],
+ ["Aug 2025","Claude Opus 4.1","Better at real-world coding and agentic tasks."],
+ ["Sep 2025","Claude Sonnet 4.5","Can work on complex tasks for many hours in a row."],
+ ["Oct 2025","Claude Haiku 4.5","Near-frontier coding at a much lower price."],
+ ["Nov 2025","Claude Opus 4.5","Scores above 80% on SWE-bench Verified.",1],
+ ["2026","The Claude 5 generation","Models such as Sonnet 5, Opus 5.5 and Fable 5.1.",1]
+];
+var tl=document.getElementById("timeline");
+TL.forEach(function(t){
+  var li=document.createElement("li"); if(t[3]) li.className="big";
+  li.innerHTML="<time>"+t[0]+"</time><div><h5>"+t[1]+(t[4]?'<span class="tag">'+t[4]+"</span>":"")+"</h5><p>"+t[2]+"</p></div>";
+  tl.appendChild(li);
+});
+
+/* ---------------- word bank ---------------- */
+var filterSaved=false, reveal=false, cardsEl=document.getElementById("cards");
+var order=[]; words.forEach(function(el){ if(order.indexOf(el.dataset.k)<0) order.push(el.dataset.k) });
+document.getElementById("vocabMeta").textContent = order.length + " words from the text";
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function renderCards(){
+  var list = filterSaved ? order.filter(function(k){return saved.indexOf(k)>-1}) : order;
+  cardsEl.classList.toggle("reveal", reveal);
+  if(!list.length){ cardsEl.innerHTML='<div class="empty">No saved words yet. Hover over an underlined word in the text and press ☆ Save.</div>'; return; }
+  cardsEl.innerHTML = list.map(function(k){
+    var g=G[k]||["—",""], s=saved.indexOf(k)>-1;
+    return '<button type="button" class="card" data-k="'+esc(k)+'"><span class="en">'+esc(k)+(s?"<em>★</em>":"")+'</span><span class="d">'+esc(g[1])+'</span><span class="r">'+esc(g[0])+'</span></button>';
+  }).join("");
+}
+cardsEl.addEventListener("click",function(e){
+  var c=e.target.closest(".card"); if(!c) return;
+  c.classList.toggle("rev");
+  if(c.classList.contains("rev")) speak(c.dataset.k);
+});
+var fAll=document.getElementById("fAll"), fSaved=document.getElementById("fSaved"), rv=document.getElementById("revealAll");
+fAll.addEventListener("click",function(){filterSaved=false;fAll.setAttribute("aria-pressed","true");fSaved.setAttribute("aria-pressed","false");renderCards()});
+fSaved.addEventListener("click",function(){filterSaved=true;fSaved.setAttribute("aria-pressed","true");fAll.setAttribute("aria-pressed","false");renderCards()});
+rv.addEventListener("click",function(){reveal=!reveal;rv.setAttribute("aria-pressed",reveal?"true":"false");renderCards()});
+
+/* ---------------- quiz ---------------- */
+var Q=[
+ ["In 1950, Alan Turing suggested…",["a chess program to beat world champions","a practical test of whether a machine can think","the first neural network trained on graphics cards"],1,"Turing proposed what we now call the Turing test (Chapter 1)."],
+ ["What did the 2017 paper “Attention Is All You Need” introduce?",["The Transformer architecture","Constitutional AI","The scaling laws"],0,"The Transformer processes words in parallel and is the basis of almost every modern language model."],
+ ["The word “anthropic” means…",["relating to computers","relating to human beings","relating to safety"],1,"Anthropic means “relating to human beings”."],
+ ["In Constitutional AI, the model learns to…",["copy answers written by experts","critique and revise its own answers using written principles","search the internet for the correct answer"],1,"A written “constitution” guides how the model judges and improves its responses."],
+ ["The Responsible Scaling Policy was inspired by…",["the rules of chess","biosafety levels in laboratories","the stock market"],1,"AI Safety Levels (ASL) are modelled on the biosafety levels used for dangerous pathogens."],
+ ["Haiku, Sonnet and Opus are named after…",["forms of poetry and music, from small to large","famous scientists","cities in Japan and Italy"],0,"The names describe size: a short poem, a longer poem and a major work."],
+ ["What is the Model Context Protocol (MCP)?",["A safety test for new models","An open standard for connecting AI assistants to tools and data","A programming language invented by Anthropic"],1,"MCP was released in November 2024 and adopted across the industry."],
+ ["If an amount of money is “staggering”, it is…",["shockingly large","slightly too small","impossible to measure"],0,"Staggering = so large that it is shocking (колоссальный)."],
+ ["Which word is closest in meaning to “candid”?",["careful","frank","confused"],1,"Candid means honest and direct (откровенный)."],
+ ["What was Anthropic’s valuation in September 2025?",["$18.4 billion","$61.5 billion","$183 billion"],2,"See Figure 4 in Chapter 7."]
+];
+var box=document.getElementById("quizBox"), scoreEl=document.getElementById("score"), answers={};
+function renderQuiz(){
+  box.innerHTML="";
+  Q.forEach(function(q,i){
+    var d=document.createElement("div"); d.className="q";
+    d.innerHTML='<h5><span>'+String(i+1).padStart(2,"0")+'</span>'+q[0]+'</h5><div class="opts">'+q[1].map(function(o,j){return '<button type="button" data-q="'+i+'" data-o="'+j+'">'+o+'</button>'}).join("")+'</div><p class="why" hidden>'+q[3]+'</p>';
+    box.appendChild(d);
+  });
+  score();
+}
+function score(){
+  var n=0; Object.keys(answers).forEach(function(k){ if(answers[k]===Q[k][2]) n++ });
+  scoreEl.textContent=n+" / "+Q.length;
+}
+box.addEventListener("click",function(e){
+  var b=e.target.closest("button[data-q]"); if(!b||b.disabled) return;
+  var qi=+b.dataset.q, oi=+b.dataset.o, wrap=b.parentNode;
+  answers[qi]=oi;
+  Array.prototype.forEach.call(wrap.children,function(x,j){ x.disabled=true; if(j===Q[qi][2]) x.classList.add("ok"); else if(j===oi) x.classList.add("no"); });
+  wrap.nextElementSibling.hidden=false;
+  score();
+});
+document.getElementById("resetQuiz").addEventListener("click",function(){answers={};renderQuiz()});
+
+/* ---------------- progress + active chapter ---------------- */
+var prog=document.getElementById("prog"), rFill=document.getElementById("rulerFill");
+var tocLinks=Array.prototype.slice.call(document.querySelectorAll(".rail a"));
+var secs=tocLinks.map(function(a){return document.querySelector(a.getAttribute("href"))});
+function onScroll(){
+  var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+  var p=max>0?h.scrollTop/max:0;
+  prog.style.width=(p*100)+"%";
+  var active=-1;
+  secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top < window.innerHeight*0.35) active=i });
+  tocLinks.forEach(function(a,i){a.classList.toggle("on", i===active)});
+  // ruler fill follows reading position through chapters
+  var yrs=[1997,2017,2021,2022,2023,2024,2025,2026,2026,2026];
+  var y = active<0?1950:yrs[active];
+  rFill.style.width=((y-y0)/(y1-y0)*100)+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+
+/* ---------------- charts ---------------- */
+var charts=[];
+function tok(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+var SUP={"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"};
+function pow10(v){var e=Math.round(Math.log10(v));return "10"+String(e).split("").map(function(c){return SUP[c]||c}).join("")}
+function baseOpts(c){
+  return {
+    responsive:true, maintainAspectRatio:false, animation:{duration:500},
+    layout:{padding:{top:8,right:8}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{backgroundColor:c.surface,titleColor:c.ink,bodyColor:c.ink2,borderColor:c.line,borderWidth:1,padding:10,cornerRadius:10,displayColors:false,
+        titleFont:{family:"Bricolage Grotesque",weight:"600",size:13},bodyFont:{family:"JetBrains Mono",size:12}}
+    },
+    scales:{
+      x:{grid:{display:false},border:{color:c.line},ticks:{color:c.muted,font:{family:"JetBrains Mono",size:11}}},
+      y:{grid:{color:c.line},border:{display:false},ticks:{color:c.muted,font:{family:"JetBrains Mono",size:11}}}
+    }
+  };
+}
+function buildCharts(){
+  if(!window.Chart) return;
+  charts.forEach(function(ch){ch.destroy()}); charts=[];
+  var c={ink:tok("--ink"),ink2:tok("--ink-2"),muted:tok("--muted"),line:tok("--line"),accent:tok("--accent"),soft:tok("--accent-soft"),surface:tok("--surface")};
+
+  // Figure 1: compute (log scale)
+  var comp=[["AlexNet",2012,4.7e17],["Seq2Seq",2014,7.3e18],["AlphaGo Lee",2016,1.9e21],["Transformer",2017,7.4e18],["BERT-Large",2018,2.9e20],["GPT-2",2019,1.9e21],["GPT-3",2020,3.1e23],["PaLM",2022,2.5e24],["GPT-4",2023,2.1e25],["Gemini Ultra",2023.9,5.0e25]];
+  var o1=baseOpts(c);
+  o1.scales.x.type="linear"; o1.scales.x.min=2011.5; o1.scales.x.max=2024.5;
+  o1.scales.x.ticks.stepSize=2; o1.scales.x.ticks.callback=function(v){return Number.isInteger(v)?v:""};
+  o1.scales.y.type="logarithmic"; o1.scales.y.min=1e17; o1.scales.y.max=1e26;
+  o1.scales.y.afterBuildTicks=function(ax){var t=[];for(var e=17;e<=26;e++)t.push({value:Math.pow(10,e)});ax.ticks=t}; o1.scales.y.ticks.autoSkip=false;
+  o1.scales.y.ticks.callback=function(v){var l=Math.log10(v);return Math.abs(l-Math.round(l))<1e-6 && Math.round(l)%2===1?pow10(v):""};
+  o1.plugins.tooltip.callbacks={title:function(it){return comp[it[0].dataIndex][0]+" · "+Math.floor(comp[it[0].dataIndex][1])},label:function(it){var v=comp[it.dataIndex][2],e=Math.floor(Math.log10(v));return (v/Math.pow(10,e)).toFixed(1)+" × "+pow10(Math.pow(10,e))+" FLOP"}};
+  charts.push(new Chart(document.getElementById("cCompute"),{
+    type:"scatter",
+    data:{datasets:[{data:comp.map(function(d){return {x:d[1],y:d[2]}}),backgroundColor:c.accent,borderColor:c.surface,borderWidth:2,pointRadius:6,pointHoverRadius:8,pointHitRadius:14}]},
+    options:o1,
+    plugins:[{id:"labels",afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx, meta=ch.getDatasetMeta(0), show={"AlexNet":1,"AlphaGo Lee":1,"Transformer":1,"GPT-3":1,"GPT-4":1};
+      ctx.save(); ctx.font="12px 'Bricolage Grotesque', system-ui, sans-serif"; ctx.fillStyle=c.ink2;
+      meta.data.forEach(function(p,i){ var n=comp[i][0]; if(!show[n]) return;
+        var below = n==="Transformer";
+        ctx.textAlign = n==="GPT-4" ? "right" : "left";
+        ctx.fillText(n, p.x + (n==="GPT-4"?-10:10), p.y + (below?16:-8)); });
+      ctx.restore();
+    }}]
+  }));
+
+  // Figure 2: context window (horizontal bars)
+  var ctxD=[["Claude 1 · Mar 2023",9],["Claude 1 · May 2023",100],["Claude 2 · Jul 2023",100],["Claude 2.1 · Nov 2023",200],["Claude 3 · Mar 2024",200],["Sonnet 4 · Aug 2025",1000]];
+  var o2=baseOpts(c);
+  o2.indexAxis="y";
+  o2.scales.x.grid={color:c.line}; o2.scales.x.border={display:false}; o2.scales.x.max=1100;
+  o2.scales.x.ticks.callback=function(v){return v%250===0?v+"K":""};
+  o2.scales.y.grid={display:false}; o2.scales.y.border={color:c.line};
+  o2.scales.y.ticks.font={family:"Bricolage Grotesque",size:12}; o2.scales.y.ticks.color=c.ink2;
+  o2.plugins.tooltip.callbacks={label:function(it){var v=it.raw;return v+"K tokens ≈ "+Math.round(v*0.75)+"K words"}};
+  charts.push(new Chart(document.getElementById("cContext"),{
+    type:"bar",
+    data:{labels:ctxD.map(function(d){return d[0]}),datasets:[{data:ctxD.map(function(d){return d[1]}),backgroundColor:c.accent,borderRadius:4,borderSkipped:"start",barPercentage:.7,categoryPercentage:.9}]},
+    options:o2,
+    plugins:[{id:"vals",afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx, meta=ch.getDatasetMeta(0);
+      ctx.save(); ctx.font="600 11px 'JetBrains Mono', monospace"; ctx.fillStyle=c.ink; ctx.textBaseline="middle";
+      meta.data.forEach(function(b,i){ var inside=b.x > ch.chartArea.right-50; ctx.fillStyle=inside?tok("--accent-ink"):c.ink; ctx.textAlign=inside?"right":"left"; ctx.fillText(ctxD[i][1]+"K", inside?b.x-6:b.x+6, b.y) }); ctx.restore();
+    }}]
+  }));
+
+  // Figure 3: SWE-bench
+  var swe=[["3.5 Sonnet","Oct 2024",49.0],["3.7 Sonnet","Feb 2025",62.3],["Sonnet 4","May 2025",72.7],["Opus 4.1","Aug 2025",74.5],["Sonnet 4.5","Sep 2025",77.2],["Opus 4.5","Nov 2025",80.9]];
+  var o3=baseOpts(c);
+  o3.scales.y.min=40; o3.scales.y.max=90; o3.scales.y.ticks.stepSize=10; o3.scales.y.ticks.callback=function(v){return v+"%"};
+  o3.plugins.tooltip.mode="index"; o3.plugins.tooltip.intersect=false;
+  o3.plugins.tooltip.callbacks={title:function(it){var d=swe[it[0].dataIndex];return "Claude "+d[0]+" · "+d[1]},label:function(it){return it.raw.toFixed(1)+"% solved"}};
+  o3.interaction={mode:"index",intersect:false};
+  charts.push(new Chart(document.getElementById("cSwe"),{
+    type:"line",
+    data:{labels:swe.map(function(d){return [d[0],d[1]]}),datasets:[{data:swe.map(function(d){return d[2]}),borderColor:c.accent,backgroundColor:c.soft,fill:"start",borderWidth:2,tension:.25,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:c.accent,pointBorderColor:c.surface,pointBorderWidth:2}]},
+    options:o3,
+    plugins:[{id:"ends",afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx, meta=ch.getDatasetMeta(0), idx=[0,swe.length-1];
+      ctx.save(); ctx.font="600 12px 'JetBrains Mono', monospace"; ctx.fillStyle=c.ink;
+      idx.forEach(function(i){var p=meta.data[i]; ctx.textAlign=i?"right":"left"; ctx.fillText(swe[i][2].toFixed(1)+"%", p.x+(i?-2:6), p.y-12)}); ctx.restore();
+    }}]
+  }));
+
+  // Figure 4: valuation
+  var val=[["Series C","May 2023",4.1],["Series D","early 2024",18.4],["Series E","Mar 2025",61.5],["Series F","Sep 2025",183]];
+  var o4=baseOpts(c);
+  o4.scales.y.min=0; o4.scales.y.max=200; o4.scales.y.ticks.stepSize=50; o4.scales.y.ticks.callback=function(v){return "$"+v+"B"};
+  o4.plugins.tooltip.callbacks={title:function(it){var d=val[it[0].dataIndex];return d[0]+" · "+d[1]},label:function(it){return "$"+it.raw+" billion"}};
+  charts.push(new Chart(document.getElementById("cValue"),{
+    type:"bar",
+    data:{labels:val.map(function(d){return [d[1],d[0]]}),datasets:[{data:val.map(function(d){return d[2]}),backgroundColor:c.accent,borderRadius:4,borderSkipped:"start",barPercentage:.62}]},
+    options:o4,
+    plugins:[{id:"vals",afterDatasetsDraw:function(ch){
+      var ctx=ch.ctx, meta=ch.getDatasetMeta(0);
+      ctx.save(); ctx.font="600 12px 'JetBrains Mono', monospace"; ctx.fillStyle=c.ink; ctx.textAlign="center";
+      meta.data.forEach(function(b,i){ ctx.fillText("$"+val[i][2]+"B", b.x, b.y-8) }); ctx.restore();
+    }}]
+  }));
+}
+var rebuildT=null;
+function rebuild(){clearTimeout(rebuildT); rebuildT=setTimeout(buildCharts,60)}
+try{ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",rebuild) }catch(e){}
+new MutationObserver(rebuild).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+/* ---------------- boot ---------------- */
+applyPrefs(); paintSaved(); renderCards(); renderQuiz(); onScroll();
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(buildCharts) } else { buildCharts() }
+})();
+</script>
+</body>
+</html>
